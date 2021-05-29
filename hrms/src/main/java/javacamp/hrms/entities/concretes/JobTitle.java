@@ -22,6 +22,11 @@ public class JobTitle {
 	@Column(name="id")
 	private int id;
 	
-	@Column(name="title")
+	@Column(name="title",unique = true)
 	private String title;
+
+	public JobTitle(String title) {
+		super();
+		this.title = title;
+	}
 }
