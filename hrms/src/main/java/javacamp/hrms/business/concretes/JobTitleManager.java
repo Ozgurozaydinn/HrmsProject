@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javacamp.hrms.business.abstracts.JobTitleService;
+import javacamp.hrms.core.utilities.results.DataResult;
+import javacamp.hrms.core.utilities.results.SuccessDataResult;
 import javacamp.hrms.dataAccess.abstracts.JobTitleDao;
 import javacamp.hrms.entities.concretes.JobTitle;
 
@@ -20,9 +22,9 @@ public class JobTitleManager implements JobTitleService{
 	}
 
 	@Override
-	public List<JobTitle> getAll() {
+	public DataResult<List<JobTitle>> getAll() {
 		
-		return this.jobTitleDao.findAll() ;
+		return new SuccessDataResult<List<JobTitle>>(this.jobTitleDao.findAll(),"Data listelendi.") ;
 	}
 
 }
