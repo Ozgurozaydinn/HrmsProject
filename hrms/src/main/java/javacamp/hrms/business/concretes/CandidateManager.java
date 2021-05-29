@@ -39,6 +39,11 @@ public class CandidateManager implements CandidateService{
 	@Override
 	public Result register(CandidateForRegisterDto candidate) {
 		if(isEverythingOk(candidate) != null) return isEverythingOk(candidate);
+		
+		User userForRegister = new User(candidate.getEmail(), candidate.getPassword());
+		userService.add(userForRegister);
+		Candidate candidateForRegister = new Candidate(userForRegister.getUserId(), candidate.getFirstName(), candidate.getLastName(), candidate.getIdentificationNumber(), candidate.getBirthDate());
+		this.candidateDao.save(candidateForRegister);
 		return new SuccessResult("Kayıt başarıyla yapıldı");
 	}
 	
@@ -49,11 +54,9 @@ public class CandidateManager implements CandidateService{
 		if(hasEmailBeenUsedBefore(candidate) != null) return hasEmailBeenUsedBefore(candidate);
 		if(hasIdentificationNumberBeenUsedBefore(candidate) != null) return hasIdentificationNumberBeenUsedBefore(candidate);
 		if(isEmailVerified(candidate) != null) return isEmailVerified(candidate);	
+		if(passwordControl(candidate) != null) return passwordControl(candidate);
 		
-		User userForRegister = new User(candidate.getEmail(), candidate.getPassword());
-		userService.add(userForRegister);
-		Candidate candidateForRegister = new Candidate(userForRegister.getUserId(), candidate.getFirstName(), candidate.getLastName(), candidate.getIdentificationNumber(), candidate.getBirthDate());
-		this.candidateDao.save(candidateForRegister);
+		
 		return null;
 	}
 	
@@ -86,6 +89,11 @@ public class CandidateManager implements CandidateService{
 	}
 	
 	public Result isEmailVerified(CandidateForRegisterDto candidate) {
+		return null;
+	}
+	
+	public Result passwordControl(CandidateForRegisterDto candidate) {
+		if(candidate.getPassword() != candidate.getPasswordRepeat()) return new ErrorResult("Şifreler uyuşmuyor");
 		return null;
 	}
 	

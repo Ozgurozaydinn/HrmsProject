@@ -11,6 +11,7 @@ import javacamp.hrms.core.utilities.results.*;
 import javacamp.hrms.dataAccess.abstracts.UserDao;
 import javacamp.hrms.entities.concretes.User;
 import javacamp.hrms.entities.concretes.DTOs.CandidateForRegisterDto;
+import javacamp.hrms.entities.concretes.DTOs.EmployerForRegisterDto;
 
 @Service
 public class UserManager implements UserService {
@@ -24,10 +25,15 @@ public class UserManager implements UserService {
 	
 	@Override
 	public Result isEmailUsing(CandidateForRegisterDto candidate) {
-		if(userDao.findByEmail(candidate.getEmail()) != null) return new ErrorResult();
+		if(userDao.findByEmail(candidate.getEmail()) != null) return new ErrorResult("Mail kullanımda");
 		return null;
 	}
 
+	@Override
+	public Result isEmailUsing(EmployerForRegisterDto employer) {
+		if(userDao.findByEmail(employer.getEmail()) != null) return new ErrorResult();
+		return null;
+	}
 
 	@Override
 	public Result add(User user) {
@@ -35,5 +41,6 @@ public class UserManager implements UserService {
 		return new SuccessResult();
 		
 	}
+
 
 }

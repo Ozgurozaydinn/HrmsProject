@@ -2,8 +2,6 @@ package javacamp.hrms.entities.concretes;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -19,7 +17,6 @@ import lombok.NoArgsConstructor;
 public class Employer {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
 	
@@ -28,4 +25,15 @@ public class Employer {
 	
 	@Column(name="web_address")
 	private String webAddress;
+	
+	@Column(name="phone_number")
+	private String phoneNumber;
+
+	public Employer(String companyName, String webAddress, String phoneNumber) {
+		super();
+		this.companyName = companyName;
+		this.webAddress = webAddress;
+		this.phoneNumber = phoneNumber;
+	}
+	
 }
